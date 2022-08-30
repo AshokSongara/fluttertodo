@@ -1,3 +1,5 @@
+import 'package:fluttertodo/presentation/pages/todo/update_todo_page.dart';
+
 import '../../presentation/pages/todo/add_todo_page.dart';
 import '../../presentation/pages/todo/todo_home_page.dart';
 import '../../presentation/pages/todo/view_todo_page.dart';
@@ -9,6 +11,21 @@ class AppRouter {
       return MaterialPageRoute(
         builder: (context) {
           return AddTodoPage();
+        },
+      );
+    }
+
+    if (settings.name == UpdateTodoPage.routeName) {
+      final viewUpdateTodoPageArguments = settings.arguments;
+      return MaterialPageRoute(
+        builder: (context) {
+          return UpdateTodoPage(
+            key: ValueKey(
+                (viewUpdateTodoPageArguments as ViewUpdateTodoPageArguments)
+                    .todoModel
+                    .id),
+            todoModel: viewUpdateTodoPageArguments.todoModel,
+          );
         },
       );
     }

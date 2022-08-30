@@ -6,4 +6,6 @@ abstract class TodoRepository {
   Future<dynamic> addTodo(String task);
 
   Future<void> removeTodo(Todo task);
+
+  Future<void> updateTodo(Todo task);
 }

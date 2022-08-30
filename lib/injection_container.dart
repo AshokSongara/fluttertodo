@@ -1,4 +1,6 @@
 import 'package:fluttertodo/data/datasources/app_database.dart';
+import 'package:fluttertodo/domain/usecases/todo/remove_todo.dart';
+import 'package:fluttertodo/domain/usecases/todo/update_todo.dart';
 import 'package:fluttertodo/utils/constants.dart';
 
 import 'data/respositories/todo/todo_repository_impl.dart';
@@ -18,7 +20,8 @@ Future<void> init() async {
   injector.registerSingleton<AppDatabase>(database);
 
   injector.registerFactory<TodoFormBloc>(
-    () => TodoFormBloc(addTodo: injector()),
+    () => TodoFormBloc(
+        addTodo: injector(), removeTodo: injector(), updateTodo: injector()),
   );
   injector.registerFactory<TodoBloc>(
     () => TodoBloc(
@@ -28,6 +31,8 @@ Future<void> init() async {
 
   injector.registerLazySingleton(() => GetAllTodo(injector()));
   injector.registerLazySingleton(() => AddTodo(injector()));
+  injector.registerLazySingleton(() => RemoveTodo(injector()));
+  injector.registerLazySingleton(() => UpdateTodo(injector()));
 
   injector.registerLazySingleton<TodoRepository>(
     () => TodoRepositoryImpl(appDatabase: injector()),

@@ -12,4 +12,7 @@ abstract class TodoDao {
 
   @delete
   Future<void> deleteTodo(Todo todo);
+
+  @update
+  Future<void> updateTodo(Todo todo);
 }

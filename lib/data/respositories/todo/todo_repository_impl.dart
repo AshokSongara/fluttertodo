@@ -27,4 +27,9 @@ class TodoRepositoryImpl implements TodoRepository {
   Future<void> removeTodo(Todo task) async {
     return await appDatabase.todoDao.deleteTodo(task);
   }
+
+  @override
+  Future<void> updateTodo(Todo task) async {
+    return await appDatabase.todoDao.updateTodo(task);
+  }
 }

@@ -13,4 +13,12 @@ class TodoFormAddSuccessState extends TodoFormState {}
 
 class TodoFormAddFailState extends TodoFormState {}
 
+class TodoFormRemoveSuccessState extends TodoFormState {}
+
+class TodoFormRemoveFailState extends TodoFormState {}
+
+class TodoFormUpdateSuccessState extends TodoFormState {}
+
+class TodoFormUpdateFailState extends TodoFormState {}
+
 class TodoFormLoadingState extends TodoFormState {}

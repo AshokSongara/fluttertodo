@@ -82,7 +82,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `todoList` (`task` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `todoList` (`task` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -101,6 +101,8 @@ class _$TodoDao extends TodoDao {
       : _queryAdapter = QueryAdapter(database),
         _todoInsertionAdapter = InsertionAdapter(database, 'todoList',
             (Todo item) => <String, Object?>{'task': item.task, 'id': item.id}),
+        _todoUpdateAdapter = UpdateAdapter(database, 'todoList', ['id'],
+            (Todo item) => <String, Object?>{'task': item.task, 'id': item.id}),
         _todoDeletionAdapter = DeletionAdapter(database, 'todoList', ['id'],
             (Todo item) => <String, Object?>{'task': item.task, 'id': item.id});
 
@@ -112,18 +114,25 @@ class _$TodoDao extends TodoDao {
 
   final InsertionAdapter<Todo> _todoInsertionAdapter;
 
+  final UpdateAdapter<Todo> _todoUpdateAdapter;
+
   final DeletionAdapter<Todo> _todoDeletionAdapter;
 
   @override
   Future<List<Todo>> getAllTodosList() async {
     return _queryAdapter.queryList('SELECT * FROM todoList',
         mapper: (Map<String, Object?> row) =>
-            Todo(task: row['task'] as String, id: row['id'] as int));
+            Todo(task: row['task'] as String, id: row['id'] as int?));
   }
 
   @override
   Future<void> insertTodo(Todo todo) async {
     await _todoInsertionAdapter.insert(todo, OnConflictStrategy.replace);
+  }
+
+  @override
+  Future<void> updateTodo(Todo todo) async {
+    await _todoUpdateAdapter.update(todo, OnConflictStrategy.abort);
   }
 
   @override

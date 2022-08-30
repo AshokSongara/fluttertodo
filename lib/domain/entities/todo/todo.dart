@@ -4,7 +4,7 @@ import 'package:fluttertodo/utils/constants.dart';
 
 @Entity(tableName: kTodosTableName)
 class Todo extends Equatable {
-  final String task;
+  late final String task;
 
   @PrimaryKey(autoGenerate: true)
   final int? id;
