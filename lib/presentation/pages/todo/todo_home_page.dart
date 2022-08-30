@@ -58,7 +58,7 @@ class TodoHomePage extends StatelessWidget {
               );
             } else if (state is TodoLoadFailedState) {
               return const Center(
-                child: Text("Error Loading"),
+                child: Text("No Data"),
               );
             } else {
               return const Center(
